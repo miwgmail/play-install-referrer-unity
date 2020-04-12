@@ -3,7 +3,7 @@
 <table align="center">
     <tr>
         <td align="left">Supported platforms:</td>
-        <td align="left"><b>Android</b></td>
+        <td align="left"><img src="https://images-fe.ssl-images-amazon.com/images/I/21EctgvtXUL.png" width="16"></td>
     </tr>
     <tr>
         <td align="left">Current version:</td>
@@ -25,9 +25,9 @@
 
 **play-install-referrer** is a simple wrapper around Google's [Play Install Referrer Library](https://developer.android.com/google/play/installreferrer/library) which offers basic functionality of obtaining Android referrer information from Unity app.
 
-More information about Play Install Referrer API can be found in [here](https://developer.android.com/google/play/installreferrer/igetinstallreferrerservice).
+More information about Play Install Referrer API can be found in [official Google documentation](https://developer.android.com/google/play/installreferrer/igetinstallreferrerservice).
 
-At this moment, version of Play Install Referrer Library which is being used inside of **play-install-referrer** plugin is [1.1.2](https://mvnrepository.com/artifact/com.android.installreferrer/installreferrer/1.1.2).
+Version of native Play Install Referrer Library which is being used inside of latest **play-install-referrer** plugin version is [1.1.2](https://mvnrepository.com/artifact/com.android.installreferrer/installreferrer/1.1.2).
 
 ## Usage
 
@@ -68,13 +68,13 @@ Instance of [InstallReferrerDetails](#api-installreferrerdetails) object will be
 
 ## Under the hood
 
-Important thing to notice is that in order to work properly, Google's install referrer library requires following permission to be added to your app's `AndroidManifest.xml`:
+Important thing to notice is that in order to work properly, Play Install Referrer Library requires following permission to be added to your app's `AndroidManifest.xml`:
 
 ```xml
 <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE"/>
 ```
 
-Dependency to Google's install referrer library is added as [AAR library](./Assets/Android/installreferrer-1.1.2.aar) and it will make sure that manifest file ends up with above mentioned permission added to it upon building your app.
+Play Install Referrer Library is added to **play-install-referrer** plugin as an [AAR library](./Assets/Android/installreferrer-1.1.2.aar) and it will automatically make sure that manifest file ends up with above mentioned permission added to it upon building your app.
 
 ## API reference
    * [InstallReferrer class](#api-installreferrer)
