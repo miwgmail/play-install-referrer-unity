@@ -4,17 +4,17 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-namespace UE.InstallReferrerApi
+namespace BlackBox.PlayInstallReferrerPlugin
 {
 #if UNITY_ANDROID
-    public class InstallReferrerAndroid
+    public class PlayInstallReferrerAndroid
     {
         private static InstallReferrerStateListener installReferrerStateProxy;
         private static AndroidJavaObject ajoInstallReferrerClient;
         private static Dictionary<int, string> installReferrerResponseCodes;
 
         // Public API
-        public static void GetInstallReferrerInfo(Action<InstallReferrerDetails> callback)
+        public static void GetInstallReferrerInfo(Action<PlayInstallReferrerDetails> callback)
         {
             ajoInstallReferrerClient = GetInstallReferrerClient();
             if (ajoInstallReferrerClient == null)
@@ -51,9 +51,9 @@ namespace UE.InstallReferrerApi
 
         private class InstallReferrerStateListener : AndroidJavaProxy
         {
-            private Action<InstallReferrerDetails> callback;
+            private Action<PlayInstallReferrerDetails> callback;
 
-            public InstallReferrerStateListener(Action<InstallReferrerDetails> pCallback) : base("com.android.installreferrer.api.InstallReferrerStateListener")
+            public InstallReferrerStateListener(Action<PlayInstallReferrerDetails> pCallback) : base("com.android.installreferrer.api.InstallReferrerStateListener")
             {
                 this.callback = pCallback;
             }
@@ -73,15 +73,15 @@ namespace UE.InstallReferrerApi
                         }
 
                         String installReferrer = ajoReferrerDetails.Call<string>("getInstallReferrer");
-                        long referrerClickTimestampSeconds = ajoReferrerDetails.Call<long>("getReferrerClickTimestampSeconds");
                         long installBeginTimestampSeconds = ajoReferrerDetails.Call<long>("getInstallBeginTimestampSeconds");
-                        bool googlePlayInstantParam = ajoReferrerDetails.Call<bool>("getGooglePlayInstantParam");
+                        long referrerClickTimestampSeconds = ajoReferrerDetails.Call<long>("getReferrerClickTimestampSeconds");
+                        bool googlePlayInstant = ajoReferrerDetails.Call<bool>("getGooglePlayInstantParam");
 
-                        InstallReferrerDetails installReferrerDetails = new InstallReferrerDetails(
+                        PlayInstallReferrerDetails installReferrerDetails = new PlayInstallReferrerDetails(
                             installReferrer,
-                            googlePlayInstantParam,
+                            referrerClickTimestampSeconds,
                             installBeginTimestampSeconds,
-                            referrerClickTimestampSeconds);
+                            googlePlayInstant);
                         this.callback(installReferrerDetails);
                     }
                     else if (responseCode == installReferrerResponseCodes.FirstOrDefault(x => x.Value == "FEATURE_NOT_SUPPORTED").Key)
