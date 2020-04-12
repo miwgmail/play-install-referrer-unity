@@ -31,12 +31,12 @@ Version of native Play Install Referrer Library which is being used inside of la
 
 ## Usage
 
-In order to obtain install referrer details, call [GetInstallReferrerInfo](#api-ir-getinstallreferrerinfo) static method of [InstallReferrer](#api-installreferrer) class:
+In order to obtain install referrer details, call [GetInstallReferrerInfo](#api-ir-getinstallreferrerinfo) static method of [PlayInstallReferrer](#api-playinstallreferrer) class:
 
 ```csharp
-using UE.InstallReferrerApi;
+using BlackBox.PlayInstallReferrerPlugin;
 
-InstallReferrer.GetInstallReferrerInfo((installReferrerDetails) =>
+PlayInstallReferrer.GetInstallReferrerInfo((installReferrerDetails) =>
     {
         Debug.Log("Install referrer details received!");
 
@@ -44,27 +44,27 @@ InstallReferrer.GetInstallReferrerInfo((installReferrerDetails) =>
         {
             Debug.Log("Install referrer: " + installReferrerDetails.InstallReferrer);
         }
-        if (installReferrerDetails.InstallBeginTimestampSeconds != null)
-        {
-            Debug.Log("Install begin timestamp: " + installReferrerDetails.InstallBeginTimestampSeconds);
-        }
         if (installReferrerDetails.ReferrerClickTimestampSeconds != null)
         {
             Debug.Log("Referrer click timestamp: " + installReferrerDetails.ReferrerClickTimestampSeconds);
         }
-        if (installReferrerDetails.GooglePlayInstantParam != null)
+        if (installReferrerDetails.InstallBeginTimestampSeconds != null)
         {
-            Debug.Log("Google Play instant parameter: " + installReferrerDetails.GooglePlayInstantParam);
+            Debug.Log("Install begin timestamp: " + installReferrerDetails.InstallBeginTimestampSeconds);
+        }
+        if (installReferrerDetails.GooglePlayInstant != null)
+        {
+            Debug.Log("Google Play instant: " + installReferrerDetails.GooglePlayInstant);
         }
     });
 ```
 
-Instance of [InstallReferrerDetails](#api-installreferrerdetails) object will be delivered into callback method. From that instance, you can get following information:
+Instance of [PlayInstallReferrerDetails](#api-playinstallreferrerdetails) object will be delivered into callback method. From that instance, you can get following information:
 
-- Install referrer string value ([InstallReferrer](#api-ird-installreferrer) property).
-- Timestamp of when app installation on device begun ([InstallBeginTimestampSeconds](#api-ird-installbegintimestampseconds) property).
-- Timestamp of when user clicked on URL which redirected him/her to Play Store to download your app ([ReferrerClickTimestampSeconds](#api-ird-referrerclicktimestampseconds) property).
-- Information if your app's instant version (if you have one) was launched in past 7 days ([GooglePlayInstantParam](#api-ird-googleplayinstantparam) property).
+- Install referrer string value ([InstallReferrer](#api-pird-installreferrer) property).
+- Timestamp of when user clicked on URL which redirected him/her to Play Store to download your app ([ReferrerClickTimestampSeconds](#api-pird-referrerclicktimestampseconds) property).
+- Timestamp of when app installation on device begun ([InstallBeginTimestampSeconds](#api-pird-installbegintimestampseconds) property).
+- Information if your app's instant version (if you have one) was launched in past 7 days ([GooglePlayInstant](#api-pird-googleplayinstant) property).
 
 ## Under the hood
 
@@ -77,33 +77,33 @@ Important thing to notice is that in order to work properly, Play Install Referr
 Play Install Referrer Library is added to **play-install-referrer** plugin as an [AAR library](./Assets/Android/installreferrer-1.1.2.aar) and it will automatically make sure that manifest file ends up with above mentioned permission added to it upon building your app.
 
 ## API reference
-   * [InstallReferrer class](#api-installreferrer)
-      * [GetInstallReferrerInfo](#api-ir-getinstallreferrerinfo)
-   * [InstallReferrerDetails](#api-installreferrerdetails)
-      * [InstallReferrer](#api-ird-installreferrer)
-      * [InstallBeginTimestampSeconds](#api-ird-installbegintimestampseconds)
-      * [ReferrerClickTimestampSeconds](#api-ird-referrerclicktimestampseconds)
-      * [GooglePlayInstantParam](#api-ird-googleplayinstantparam)
+   * [PlayInstallReferrer class](#api-playinstallreferrer)
+      * [GetInstallReferrerInfo](#api-pir-getinstallreferrerinfo)
+   * [PlayInstallReferrerDetails](#api-playinstallreferrerdetails)
+      * [InstallReferrer](#api-pird-installreferrer)
+      * [ReferrerClickTimestampSeconds](#api-pird-referrerclicktimestampseconds)
+      * [InstallBeginTimestampSeconds](#api-pird-installbegintimestampseconds)
+      * [GooglePlayInstant](#api-pird-googleplayinstant)
       
-<a id="api-installreferrer"></a>InstallReferrer class
+<a id="api-playinstallreferrer"></a>PlayInstallReferrer class
 ---
 
-### <a id="api-ir-getinstallreferrerinfo"></a>GetInstallReferrerInfo
+### <a id="api-pir-getinstallreferrerinfo"></a>GetInstallReferrerInfo
 
 ```csharp
-public static void GetInstallReferrerInfo(Action<InstallReferrerDetails> callback)
+public static void GetInstallReferrerInfo(Action<PlayInstallReferrerDetails> callback)
 ```
 
-Get install referrer details.
+Static method for getting install referrer details.
 
 | Parameters | Description |
 | :------------- |:------------- |
-| **callback** | **Action\<InstallReferrerDetails\>**: Callback to which install referrer information is being delivered. |
+| **callback** | **Action\<PlayInstallReferrerDetails\>**: Callback to which install referrer information will be delivered. |
 
-<a id="api-installreferrerdetails"></a>InstallReferrerDetails class
+<a id="api-playinstallreferrerdetails"></a>InstallReferrerDetails class
 ---
 
-### <a id="api-ird-installreferrer"></a>InstallReferrer class
+### <a id="api-pird-installreferrer"></a>InstallReferrer
 
 ```csharp
 public string InstallReferrer { get; }
@@ -111,15 +111,7 @@ public string InstallReferrer { get; }
 
 Public property containing information about install referrer string value.
 
-### <a id="api-ird-installbegintimestampseconds"></a>InstallBeginTimestampSeconds
-
-```csharp
-public string InstallBeginTimestampSeconds { get; }
-```
-
-Public property containing information about timestamp of when app installation on device begun.
-
-### <a id="api-ird-referrerclicktimestampseconds"></a>ReferrerClickTimestampSeconds
+### <a id="api-pird-referrerclicktimestampseconds"></a>ReferrerClickTimestampSeconds
 
 ```csharp
 public string ReferrerClickTimestampSeconds { get; }
@@ -127,10 +119,18 @@ public string ReferrerClickTimestampSeconds { get; }
 
 Public property containing information about timestamp of when user clicked on URL which redirected him/her to Play Store.
 
-### <a id="api-ird-googleplayinstantparam"></a>GooglePlayInstantParam
+### <a id="api-pird-installbegintimestampseconds"></a>InstallBeginTimestampSeconds
 
 ```csharp
-public string GooglePlayInstantParam { get; }
+public string InstallBeginTimestampSeconds { get; }
+```
+
+Public property containing information about timestamp of when app installation on device begun.
+
+### <a id="api-pird-googleplayinstant"></a>GooglePlayInstant
+
+```csharp
+public string GooglePlayInstant { get; }
 ```
 
 Public property containing information if app's instant version was launched in past 7 days.
