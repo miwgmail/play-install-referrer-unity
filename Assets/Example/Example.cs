@@ -53,6 +53,8 @@ public class Example : MonoBehaviour
                 {
                     Debug.Log("Install referrer details received!");
 
+                    // TODO: add checks for Error property first
+
                     if (installReferrerDetails.InstallReferrer != null)
                     {
                         txtInstallReferrerFromCallback = installReferrerDetails.InstallReferrer;

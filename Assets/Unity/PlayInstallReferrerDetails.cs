@@ -9,6 +9,7 @@ namespace BlackBox.PlayInstallReferrerPlugin
         public long? ReferrerClickTimestampSeconds { get; }
         public long? InstallBeginTimestampSeconds { get; }
         public bool? GooglePlayInstant { get; }
+        public PlayInstallReferrerError Error { get; }
 
         internal PlayInstallReferrerDetails(
             string installReferrer,
@@ -16,10 +17,15 @@ namespace BlackBox.PlayInstallReferrerPlugin
             long installBeginTimestampSeconds,
             bool googlePlayInstant)
         {
-            this.InstallReferrer = installReferrer;
-            this.ReferrerClickTimestampSeconds = referrerClickTimestampSeconds;
-            this.InstallBeginTimestampSeconds = installBeginTimestampSeconds;
-            this.GooglePlayInstant = googlePlayInstant;
+            InstallReferrer = installReferrer;
+            ReferrerClickTimestampSeconds = referrerClickTimestampSeconds;
+            InstallBeginTimestampSeconds = installBeginTimestampSeconds;
+            GooglePlayInstant = googlePlayInstant;
+        }
+
+        internal PlayInstallReferrerDetails(PlayInstallReferrerError error)
+        {
+            Error = error;
         }
     }
 }

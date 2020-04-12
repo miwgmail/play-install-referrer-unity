@@ -24,6 +24,7 @@ namespace BlackBox.PlayInstallReferrerPlugin
             }
 
             installReferrerStateProxy = new InstallReferrerStateListener(callback);
+            // TODO: consider timeout mechanism, but might as well be an overkill
             ajoInstallReferrerClient.Call("startConnection", installReferrerStateProxy);
         }
 
@@ -87,23 +88,34 @@ namespace BlackBox.PlayInstallReferrerPlugin
                     else if (responseCode == installReferrerResponseCodes.FirstOrDefault(x => x.Value == "FEATURE_NOT_SUPPORTED").Key)
                     {
                         Debug.LogError("InstallReferrerResponse.FEATURE_NOT_SUPPORTED status code received");
+                        PlayInstallReferrerError installReferrerError = new PlayInstallReferrerError(responseCode, null);
+                        this.callback(new PlayInstallReferrerDetails(installReferrerError));
                     }
                     else if (responseCode == installReferrerResponseCodes.FirstOrDefault(x => x.Value == "SERVICE_UNAVAILABLE").Key)
                     {
                         Debug.LogError("InstallReferrerResponse.SERVICE_UNAVAILABLE status code received");
+                        PlayInstallReferrerError installReferrerError = new PlayInstallReferrerError(responseCode, null);
+                        this.callback(new PlayInstallReferrerDetails(installReferrerError));
                     }
                     else if (responseCode == installReferrerResponseCodes.FirstOrDefault(x => x.Value == "DEVELOPER_ERROR").Key)
                     {
                         Debug.LogError("InstallReferrerResponse.DEVELOPER_ERROR status code received");
+                        PlayInstallReferrerError installReferrerError = new PlayInstallReferrerError(responseCode, null);
+                        this.callback(new PlayInstallReferrerDetails(installReferrerError));
                     }
                     else if (responseCode == installReferrerResponseCodes.FirstOrDefault(x => x.Value == "SERVICE_DISCONNECTED").Key)
                     {
                         Debug.LogError("InstallReferrerResponse.SERVICE_DISCONNECTED status code received");
+                        PlayInstallReferrerError installReferrerError = new PlayInstallReferrerError(responseCode, null);
+                        this.callback(new PlayInstallReferrerDetails(installReferrerError));
                     }
                     else
                     {
                         Debug.LogError("Unexpected response code arrived!");
                         Debug.LogError("Response: " + responseCode);
+                        Exception exception = new Exception("Unexpected response code arrived");
+                        PlayInstallReferrerError installReferrerError = new PlayInstallReferrerError(responseCode, exception);
+                        this.callback(new PlayInstallReferrerDetails(installReferrerError));
                     }
                 }
                 catch (Exception e)
@@ -114,6 +126,7 @@ namespace BlackBox.PlayInstallReferrerPlugin
 
             public void onInstallReferrerServiceDisconnected()
             {
+                // TODO: check if there's need to handle this with Error property
                 Debug.Log("onInstallReferrerServiceDisconnected invoked");
             }
         }
