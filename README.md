@@ -31,7 +31,7 @@ Version of native Play Install Referrer Library which is being used inside of la
 
 ## Usage
 
-In order to obtain install referrer details, call [GetInstallReferrerInfo](#api-ir-getinstallreferrerinfo) static method of [PlayInstallReferrer](#api-playinstallreferrer) class:
+In order to obtain install referrer details, call [GetInstallReferrerInfo](#api-pir-getinstallreferrerinfo) static method of [PlayInstallReferrer](#api-playinstallreferrer) class:
 
 ```csharp
 using BlackBox.PlayInstallReferrerPlugin;
@@ -100,7 +100,7 @@ Static method for getting install referrer details.
 | :------------- |:------------- |
 | **callback** | **Action\<PlayInstallReferrerDetails\>**: Callback to which install referrer information will be delivered. |
 
-<a id="api-playinstallreferrerdetails"></a>InstallReferrerDetails class
+<a id="api-playinstallreferrerdetails"></a>PlayInstallReferrerDetails class
 ---
 
 ### <a id="api-pird-installreferrer"></a>InstallReferrer
