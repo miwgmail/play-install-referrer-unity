@@ -40,6 +40,19 @@ PlayInstallReferrer.GetInstallReferrerInfo((installReferrerDetails) =>
     {
         Debug.Log("Install referrer details received!");
 
+        // check for error
+        if (installReferrerDetails.Error != null)
+        {
+            Debug.LogError("Error occurred!");
+            if (installReferrerDetails.Error.Exception != null)
+            {
+                Debug.LogError("Exception message: " + installReferrerDetails.Error.Exception.Message);
+            }
+            Debug.LogError("Response code: " + installReferrerDetails.Error.ResponseCode.ToString());
+            return;
+        }
+
+        // print install referrer details
         if (installReferrerDetails.InstallReferrer != null)
         {
             Debug.Log("Install referrer: " + installReferrerDetails.InstallReferrer);
@@ -59,12 +72,14 @@ PlayInstallReferrer.GetInstallReferrerInfo((installReferrerDetails) =>
     });
 ```
 
-Instance of [PlayInstallReferrerDetails](#api-playinstallreferrerdetails) object will be delivered into callback method. From that instance, you can get following information:
+Instance of [PlayInstallReferrerDetails](#api-playinstallreferrerdetails) object will be delivered into callback method. From that instance, you can get following install referrer details:
 
 - Install referrer string value ([InstallReferrer](#api-pird-installreferrer) property).
 - Timestamp of when user clicked on URL which redirected him/her to Play Store to download your app ([ReferrerClickTimestampSeconds](#api-pird-referrerclicktimestampseconds) property).
 - Timestamp of when app installation on device begun ([InstallBeginTimestampSeconds](#api-pird-installbegintimestampseconds) property).
 - Information if your app's instant version (if you have one) was launched in past 7 days ([GooglePlayInstant](#api-pird-googleplayinstant) property).
+
+You should first check if [Error](#api-pird-error) property is **null** or not. If not, for some reason reading of install referrer details failed and those properties will be **null**. In case no error is reported, install referrer detail properties should reflect the values obtained from native Install Referrer Library response.
 
 ## Under the hood
 
@@ -84,6 +99,10 @@ Play Install Referrer Library is added to **play-install-referrer** plugin as an
       * [ReferrerClickTimestampSeconds](#api-pird-referrerclicktimestampseconds)
       * [InstallBeginTimestampSeconds](#api-pird-installbegintimestampseconds)
       * [GooglePlayInstant](#api-pird-googleplayinstant)
+      * [Error](#api-pird-error)
+   * [PlayInstallReferrerError](#api-playinstallreferrererror)
+      * [ResponseCode](#api-pire-responsecode)
+      * [Exception](#api-pire-exception)
       
 <a id="api-playinstallreferrer"></a>PlayInstallReferrer class
 ---
@@ -98,7 +117,7 @@ Static method for getting install referrer details.
 
 | Parameters | Description |
 | :------------- |:------------- |
-| **callback** | **Action\<PlayInstallReferrerDetails\>**: Callback to which install referrer information will be delivered. |
+| **callback** | **Action\<[PlayInstallReferrerDetails](#api-playinstallreferrerdetails)\>**: Callback to which install referrer information will be delivered. |
 
 <a id="api-playinstallreferrerdetails"></a>PlayInstallReferrerDetails class
 ---
@@ -114,7 +133,7 @@ Public property containing information about install referrer string value.
 ### <a id="api-pird-referrerclicktimestampseconds"></a>ReferrerClickTimestampSeconds
 
 ```csharp
-public string ReferrerClickTimestampSeconds { get; }
+public long? ReferrerClickTimestampSeconds { get; }
 ```
 
 Public property containing information about timestamp of when user clicked on URL which redirected him/her to Play Store.
@@ -122,7 +141,7 @@ Public property containing information about timestamp of when user clicked on U
 ### <a id="api-pird-installbegintimestampseconds"></a>InstallBeginTimestampSeconds
 
 ```csharp
-public string InstallBeginTimestampSeconds { get; }
+public long? InstallBeginTimestampSeconds { get; }
 ```
 
 Public property containing information about timestamp of when app installation on device begun.
@@ -130,7 +149,34 @@ Public property containing information about timestamp of when app installation 
 ### <a id="api-pird-googleplayinstant"></a>GooglePlayInstant
 
 ```csharp
-public string GooglePlayInstant { get; }
+public bool? GooglePlayInstant { get; }
 ```
 
 Public property containing information if app's instant version was launched in past 7 days.
+
+### <a id="api-pird-error"></a>Error
+
+```csharp
+public PlayInstallReferrerError Error { get; }
+```
+
+Public property containing information about error which might have occured during attempt to read install referrer details.
+
+<a id="api-playinstallreferrererror"></a>PlayInstallReferrerError class
+---
+
+### <a id="api-pire-responsecode"></a>ResponseCode
+
+```csharp
+public int ResponseCode { get; }
+```
+
+Public property containing information about one of the error response codes which native Install Referrer Library might return. Full list of potential response codes can be found in [here](https://developer.android.com/reference/com/android/installreferrer/api/InstallReferrerClient.InstallReferrerResponse) (`OK` will never be reported in this property, since it's a success status code).
+
+### <a id="api-pire-exception"></a>Exception
+
+```csharp
+public Exception Exception { get; }
+```
+
+Public property containing information about potential exception which might have occurred during attempt to read install referrer details.
