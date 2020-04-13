@@ -53,8 +53,19 @@ public class Example : MonoBehaviour
                 {
                     Debug.Log("Install referrer details received!");
 
-                    // TODO: add checks for Error property first
+                    // check for error
+                    if (installReferrerDetails.Error != null)
+                    {
+                        Debug.LogError("Error occurred!");
+                        if (installReferrerDetails.Error.Exception != null)
+                        {
+                            Debug.LogError("Exception message: " + installReferrerDetails.Error.Exception.Message);
+                        }
+                        Debug.LogError("Response code: " + installReferrerDetails.Error.ResponseCode.ToString());
+                        return;
+                    }
 
+                    // print install referrer details
                     if (installReferrerDetails.InstallReferrer != null)
                     {
                         txtInstallReferrerFromCallback = installReferrerDetails.InstallReferrer;
@@ -73,7 +84,7 @@ public class Example : MonoBehaviour
                     if (installReferrerDetails.GooglePlayInstant != null)
                     {
                         txtGooglePlayInstantFromCallback = installReferrerDetails.GooglePlayInstant.ToString();
-                        Debug.Log("Google Play instant parameter: " + installReferrerDetails.GooglePlayInstant);
+                        Debug.Log("Google Play instant: " + installReferrerDetails.GooglePlayInstant);
                     }
                 });
         }
