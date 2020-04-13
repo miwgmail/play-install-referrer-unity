@@ -1,3 +1,3 @@
-### Version 1.0.0 [xxth April 2020]
+### Version 1.0.0 [14th April 2020]
 #### Added
-- Initial release of **install-referrer-unity** plugin.
+- Initial release of **play-install-referrer** plugin.
