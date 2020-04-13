@@ -15,11 +15,11 @@
     </tr>
     <tr>
         <td align="left">Latest release:</td>
-        <td align="left"><a href=https://github.com/uerceg/play-install-referrer-unity/releases/tag/v1.0.0"><b>Download</b></a></td>
+        <td align="left"><a href=../../releases/tag/v1.0.0><b>Download</b></a></td>
     </tr>
     <tr>
         <td align="left">Troubles?</td>
-        <td align="left"><a href="https://github.com/uerceg/play-install-referrer-unity/issues/new"><b>Report an issue</b></a></td>
+        <td align="left"><a href="../../issues/new"><b>Report an issue</b></a></td>
     </tr>
 </table>
 
