@@ -13,7 +13,7 @@ namespace BlackBox.PlayInstallReferrerPlugin
         private static AndroidJavaObject ajoInstallReferrerClient;
         private static Dictionary<int, string> installReferrerResponseCodes;
 
-        // Public API
+        // public API
         public static void GetInstallReferrerInfo(Action<PlayInstallReferrerDetails> callback)
         {
             ajoInstallReferrerClient = GetInstallReferrerClient();
@@ -24,11 +24,10 @@ namespace BlackBox.PlayInstallReferrerPlugin
             }
 
             installReferrerStateProxy = new InstallReferrerStateListener(callback);
-            // TODO: consider timeout mechanism, but might as well be an overkill
             ajoInstallReferrerClient.Call("startConnection", installReferrerStateProxy);
         }
 
-        // Private API
+        // private API
         private static AndroidJavaObject GetInstallReferrerClient()
         {
             if (ajoInstallReferrerClient == null)
@@ -126,7 +125,6 @@ namespace BlackBox.PlayInstallReferrerPlugin
 
             public void onInstallReferrerServiceDisconnected()
             {
-                // TODO: check if there's need to handle this with Error property
                 Debug.Log("onInstallReferrerServiceDisconnected invoked");
             }
         }
