@@ -10,10 +10,10 @@ namespace BlackBox.PlayInstallReferrerPlugin
 #if UNITY_ANDROID
             PlayInstallReferrerAndroid.GetInstallReferrerInfo(callback);
 #elif UNITY_EDITOR
-            Debug.Error("play-install-referrer plugin can not be used in Editor.");
+            Debug.LogError("play-install-referrer plugin can not be used in Editor.");
             return;
 #else
-            Debug.Error("play-install-referrer plugin can only be used in Android apps.");
+            Debug.LogError("play-install-referrer plugin can only be used in Android apps.");
 #endif
         }
     }
