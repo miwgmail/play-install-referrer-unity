@@ -120,6 +120,8 @@ namespace BlackBox.PlayInstallReferrerPlugin
                 catch (Exception e)
                 {
                     Debug.LogError("Exception: " + e);
+                    PlayInstallReferrerError installReferrerError = new PlayInstallReferrerError(responseCode, e);
+                    this.callback(new PlayInstallReferrerDetails(installReferrerError));
                 }
             }
 
