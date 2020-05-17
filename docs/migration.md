@@ -1,4 +1,4 @@
-## Migrate **PlayInstallReferrer** plugin from v1.0.0 to v2.0.0
+## Migrate play-install-referrer plugin from v1.0.0 to v2.0.0
 
 Version 1.0.0 unfortunately brought one not really well thought through thing - all the directories containing plugin's source files were added directly into project's root **Assets** folder. Which probably no one is a fan of. Apologies for that. Version 2.0.0 fixes that and in order to migrate from v1.0.0 to v2.0.0, please make sure to completely remove the plugin prior to adding plugin version 2.0.0 to your app.
 
