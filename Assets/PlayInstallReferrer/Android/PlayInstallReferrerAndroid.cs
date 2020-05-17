@@ -1,3 +1,11 @@
+//
+//  PlayInstallReferrerAndroid.cs
+//  PlayInstallReferrer
+//
+//  Created by Uglješa Erceg (@uerceg) on 12th April 2020.
+//  Copyright © 2020 Uglješa Erceg. All rights reserved.
+//
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
